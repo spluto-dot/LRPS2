@@ -1188,13 +1188,80 @@ static void check_variables(bool first_run)
 		}
 	}
 
-#if 0
-char input_settings[32];
-for (int i = 0; i < 2; ++i)
-{
-    // bloco original inteiro
-}
-#endif
+	char input_settings[32];
+	for (int i = 0; i < 2; ++i)
+	{
+		var.key = input_settings;
+		snprintf(input_settings, sizeof(input_settings), "pcsx2_axis_scale%d", i + 1);
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+			pad_settings[i].axis_scale = atof(var.value) / 100;
+
+		snprintf(input_settings, sizeof(input_settings), "pcsx2_axis_deadzone%d", i + 1);
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+			pad_settings[i].axis_deadzone = atoi(var.value) * 32767 / 100;
+
+		snprintf(input_settings, sizeof(input_settings), "pcsx2_button_deadzone%d", i + 1);
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+			pad_settings[i].button_deadzone = atoi(var.value) * 32767 / 100;
+
+		snprintf(input_settings, sizeof(input_settings), "pcsx2_enable_rumble%d", i + 1);
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+			pad_settings[i].rumble_scale = atof(var.value) / 100;
+
+		snprintf(input_settings, sizeof(input_settings), "pcsx2_invert_left_stick%d", i + 1);
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+		{
+			if (!strcmp(var.value, "disabled"))
+			{
+				pad_settings[i].axis_invert_lx = 1;
+				pad_settings[i].axis_invert_ly = 1;
+			}
+			else if (!strcmp(var.value, "x_axis"))
+			{
+				pad_settings[i].axis_invert_lx = -1;
+				pad_settings[i].axis_invert_ly = 1;
+			}
+			else if (!strcmp(var.value, "y_axis"))
+			{
+				pad_settings[i].axis_invert_lx = 1;
+				pad_settings[i].axis_invert_ly = -1;
+			}
+			else if (!strcmp(var.value, "all"))
+			{
+				pad_settings[i].axis_invert_lx = -1;
+				pad_settings[i].axis_invert_ly = -1;
+			}
+		}
+
+		snprintf(input_settings, sizeof(input_settings), "pcsx2_invert_right_stick%d", i + 1);
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+		{
+			if (!strcmp(var.value, "disabled"))
+			{
+				pad_settings[i].axis_invert_rx = 1;
+				pad_settings[i].axis_invert_ry = 1;
+			}
+			else if (!strcmp(var.value, "x_axis"))
+			{
+				pad_settings[i].axis_invert_rx = -1;
+				pad_settings[i].axis_invert_ry = 1;
+			}
+			else if (!strcmp(var.value, "y_axis"))
+			{
+				pad_settings[i].axis_invert_rx = 1;
+				pad_settings[i].axis_invert_ry = -1;
+			}
+			else if (!strcmp(var.value, "all"))
+			{
+				pad_settings[i].axis_invert_rx = -1;
+				pad_settings[i].axis_invert_ry = -1;
+			}
+		}
+
+		snprintf(input_settings, sizeof(input_settings), "pcsx2_analog_mode%d", i + 1);
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+			pad_settings[i].force_analog = !strcmp(var.value, "enabled");
+	}
 
 	update_option_visibility();
 
