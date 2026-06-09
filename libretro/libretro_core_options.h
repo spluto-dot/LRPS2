@@ -220,7 +220,7 @@ struct retro_core_option_v2_definition option_defs_us[] = {
          { "Software (SW)", NULL },
          { NULL, NULL },
       },
-      "Auto"
+      "OpenGL"
    },
    {
       "pcsx2_upscale_multiplier",
