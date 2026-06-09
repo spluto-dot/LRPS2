@@ -48,6 +48,7 @@
 #include "../pcsx2/Patch.h"
 
 #include "../pcsx2/SPU2/spu2.h"
+#include "../pcsx2/PAD/PAD.h"
 
 #ifdef HAVE_PARALLEL_GS
 extern std::unique_ptr<GSRendererPGS> g_pgs_renderer;
@@ -1186,6 +1187,14 @@ static void check_variables(bool first_run)
 			updated = true;
 		}
 	}
+
+#if 0
+char input_settings[32];
+for (int i = 0; i < 2; ++i)
+{
+    // bloco original inteiro
+}
+#endif
 
 	update_option_visibility();
 
